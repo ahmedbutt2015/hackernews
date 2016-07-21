@@ -1,0 +1,36 @@
+<?php
+
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+class CreateBlogsTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('blogs', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('title');
+            $table->string('url');
+            $table->string('username');
+            $table->integer('point');
+//            $table->foreign('id')->references('user_id')->on('users');
+            $table->rememberToken();
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::drop('blogs');
+    }
+}
