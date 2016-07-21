@@ -172,6 +172,7 @@ return [
     'aliases' => [
 
         'Feed' => App\Http\Controllers\FeedController::class,
+        'Helper' => App\Helpers\Helper::class,
         'App' => Illuminate\Support\Facades\App::class,
         'Artisan' => Illuminate\Support\Facades\Artisan::class,
         'Auth' => Illuminate\Support\Facades\Auth::class,
