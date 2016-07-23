@@ -5,6 +5,7 @@ use App\Models\Vote;
 use DateTime;
 use App\Models\Blog;
 use App\Models\Comment;
+use Validator;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -18,13 +19,16 @@ class FeedController extends Controller
             $blogs = Blog::orderBy('id','desc')->get();
             for ($i=0;$i<$blogs->count();$i++){
                 $blogs[$i]->count = Comment::where('post_id','=',$blogs[$i]->id)->count();
-                $c =  Vote::where('post_id','=',$blogs[$i]->id)
-                                            ->where('user_id','=',Auth::user()->id)
-                                            ->count();
-                if($c > 0){
-                    $blogs[$i]->vote = Vote::where('post_id','=',$blogs[$i]->id)
-                                            ->where('user_id','=',Auth::user()->id)
-                                            ->get()->pluck('vote');
+                $blogs[$i]->point = VoteController::getPoints($blogs[$i]->id,'post');
+                $c =  Vote::where('source_id','=',$blogs[$i]->id)
+                        ->where('user_id','=',Auth::user()->id)
+                        ->where('type','=','post')
+                        ->get();
+                if(count($c) >0){
+                    $blogs[$i]->vote = 'downvote';
+                    if($c[0]->upvote == 1){
+                        $blogs[$i]->vote = 'upvote';
+                    }
                 }
             }
             return view('feed')->withBlogs($blogs);
@@ -32,12 +36,11 @@ class FeedController extends Controller
         elseif ($request->isMethod('PUT')){
             $id = $request->input('post_id');
             $blog = Blog::find($id);
-            $point = $blog->point;
             if($request->input('method') == 'upvote'){
-                $blog->point = ++$point;
+//                $blog->point = ++$point;
             }
             else{
-                $blog->point = --$point;
+//                $blog->point = --$point;
             }
             $blog->save();
         }
@@ -53,18 +56,23 @@ class FeedController extends Controller
             return view('submit');
         }
         else if($request->isMethod('POST')){
-
-            $title = $request->input('title');
-            $url = $request->input('url');
-            $blog = new Blog();
-            $blog->title = $title;
-            $blog->url = $url;
-            $blog->point = 0;
-            $blog->username = Auth::user()->username;
-            if($blog->save()){
-                return redirect('/');
+            $validator = Validator::make($request->all(),[
+                'url' => 'URL:blogs',
+            ]);
+            if($validator->passes()){
+                $title = $request->input('title');
+                $url = $request->input('url');
+                $blog = new Blog();
+                $blog->title = $title;
+                $blog->url = $url;
+                $blog->username = Auth::user()->username;
+                if($blog->save()){
+                    return redirect('/');
+                }else{
+                    return redirect('/submit')->withErrors($blog->errors());
+                }
             }else{
-                return redirect('/submit')->withErrors($blog->errors());
+                return redirect('/submit')->withErrors($validator->errors());
             }
         }
     }

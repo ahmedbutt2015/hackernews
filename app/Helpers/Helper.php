@@ -8,7 +8,11 @@ class Helper
     public static function reply($comments)
     {
         foreach($comments as $comment){
-            echo '<div class="comment " data-id=" '.$comment->id.' ">';
+            $a = "";
+            if(isset($comment->vote)){
+                $a = $comment->vote;
+            }
+            echo '<div class="comment " data-id=" '.$comment->id.'" vote="'.$a.'">';
                         echo'<div class="vote">';
                         echo '<div class="upvote glyphicon glyphicon-chevron-up"></div>';
                         echo'<div class="downvote glyphicon glyphicon-chevron-down"></div>';

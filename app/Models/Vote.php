@@ -8,6 +8,6 @@ class Vote extends Model
 {
     protected $table = 'votes';
     protected $fillable = [
-        'post_id','user_id','comment_id','vote'
+        'type','source_id','user_id','upvote','downvote'
     ];
 }

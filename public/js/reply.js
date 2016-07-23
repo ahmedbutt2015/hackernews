@@ -5,12 +5,13 @@ function closeReply() {
     $(this).bind('click',openReply);
 }
 
-function openReply(e) {
-    var temp = $(this).parent().parent().parent().parent().attr('data-id');
+function openReply() {
+    $('.replyForm').remove();
+    var temp = $(this).parents('.comment').attr('data-id');
     var token = $('meta[name="csrf-token"]').attr('content');
+
     var id = $('.wrapper .content').attr('data-id');
-    console.log(id);
-    var reply = '<form class="navbar-form navbar-left" action="/addReply" method="post">'
+    var reply = '<form class="navbar-form navbar-left replyForm" action="/addReply" method="post">'
         +'<div class="form-group">' 
         +'<input type="hidden"  name="comment_id" value="'+temp+'">'
         +'<input type="text" name="comment"class="form-control" placeholder="Search">'
@@ -20,7 +21,20 @@ function openReply(e) {
         +'<button type="submit" class="btn btn-default">Submit</button>'
         +'</form>' ;
     $(this).parent().append(reply);
-
     $(this).unbind('click');
     $(this).bind('click',closeReply);
+
+    // $.ajax({
+    //     url : '/addReply',
+    //     type : 'POST',
+    //     headers: {
+    //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    //     },
+    //     data : {
+    //         comment_id : temp,
+    //         comment : 'upvote'
+    //     },
+    //     success : function () {
+    //     }
+    // });
 }

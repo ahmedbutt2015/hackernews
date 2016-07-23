@@ -14,14 +14,12 @@ class CreateVoteTable extends Migration
     {
         Schema::create('votes', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('post_id')->nullable();
-            $table->foreign('post_id')->references('id')->on('blogs');
+            $table->string('type');
+            $table->unsignedInteger('source_id');
             $table->unsignedInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->unsignedInteger('comment_id')->nullable();
-            $table->foreign('comment_id')->references('id')->on('comments');
-            $table->string('vote');
-            $table->rememberToken();
+            $table->integer('upvote');
+            $table->integer('downvote');
             $table->timestamps();
         });
     }
@@ -33,6 +31,6 @@ class CreateVoteTable extends Migration
      */
     public function down()
     {
-//        Schema::drop('votes');
+        Schema::drop('votes');
     }
 }

@@ -31,5 +31,6 @@
 <script src="/bower_components/jquery/dist/jquery.min.js"></script>
 <script src="/js/vote.js"></script>
 <script src="/js/reply.js"></script>
+@yield('files')
 </body>
 </html>

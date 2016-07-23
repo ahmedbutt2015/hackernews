@@ -17,9 +17,6 @@ class CreateBlogsTable extends Migration
             $table->string('title');
             $table->string('url');
             $table->string('username');
-            $table->integer('point');
-//            $table->foreign('id')->references('user_id')->on('users');
-            $table->rememberToken();
             $table->timestamps();
         });
     }

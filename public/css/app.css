@@ -133,7 +133,6 @@ a:hover{
 }
 .comments{
     margin-top: 5px;
-    padding-left: 55px;
     width: 100%;
  }
 .comments .comment{
@@ -141,6 +140,8 @@ a:hover{
     min-height: 100px;
     height: auto;
     display: block;
+    clear: both;
+    padding-left: 80px;
 }
 .comment .vote,
 .comment .content-body{
@@ -160,7 +161,7 @@ a:hover{
 }
 
 .comment .content-body{
-    width: 800px;
+    width: 700px;
     height: 100%;
 }
 .content-body_up-title .reply{

@@ -1,29 +1,33 @@
-$ ('.content .upvote').on('click',upvoteEvent);
-$('.content .downvote').on('click',downvoteEvent);
-$('.content').each(function () {
+$('.comment .upvote').on('click',upvoteEvent);
+$('.comment .downvote').on('click',downvoteEvent);
+$('.comment').each(function () {
 
     if($(this).attr('vote') == 'upvote'){
-        console.log(' assign event');
+        console.log(' assign event comm');
         $(this).children().children('.upvote').unbind('click');
         $(this).children().children('.upvote').bind('click',dropUpvoteEvent);
     }
     else if($(this).attr('vote') == 'downvote'){
-        console.log(' assign event');
+        console.log(' assign event comm');
         $(this).children().children('.downvote').unbind('click');
         $(this).children().children('.downvote').bind('click',dropDownvoteEvent);
     }
 });
 
 function upvoteEvent() {
-    var id = $(this).parent().parent().attr('data-id');
-    $(this).parent().parent().attr('vote','upvote');
-    vote('post',id,'upvote',this);
- }
+    console.log(' assign event comm');
+
+    var id = $(this).parents('.comment').attr('data-id');
+    $(this).parents('.comment').attr('vote','upvote');
+    vote('comment',id,'upvote',this);
+}
 function downvoteEvent(){
+    console.log(' assign event comm');
+
     console.log('Downvote');
-    var id = $(this).parent().parent().attr('data-id');
-    $(this).parent().parent().attr('vote','downvote');
-    vote('post',id,'downvote',this);
+    var id = $(this).parents('.comment').attr('data-id');
+    $(this).parents('.comment').attr('vote','downvote');
+    vote('comment',id,'downvote',this);
 }
 function vote(type,id,vote,_this) {
     $(_this).unbind('click');
@@ -82,22 +86,13 @@ function dropVote(type,id,_this,vote) {
 function dropUpvoteEvent() {
     console.log('Drop upvote');
     $(this).parent().parent().attr('vote','');
-    var id = $(this).parent().parent().attr('data-id');
-    dropVote('post',id,this,'upvote');
+    var id = $(this).parents('.comment').attr('data-id');
+    dropVote('comment',id,this,'upvote');
 }
 function dropDownvoteEvent() {
     console.log('Drop downvote');
     $(this).parent().parent().attr('vote','');
-    var id = $(this).parent().parent().attr('data-id');
-    dropVote('post',id,this,'downvote');
-}
-
-var id = 0;
-$('.content-body_up-title').on('mouseenter',function () {
-    id = $(this).parent().parent().parent().attr('data-id');
-});
-
-function blog() {
-    location.href = '/blog/'+id;
+    var id = $(this).parents('.comment').attr('data-id');
+    dropVote('comment',id,this,'downvote');
 }
 

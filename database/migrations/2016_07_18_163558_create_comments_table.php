@@ -21,8 +21,6 @@ class CreateCommentsTable extends Migration
             $table->unsignedInteger('comment_id')->nullable();
             $table->foreign('comment_id')->references('id')->on('comments');
             $table->string('comment');
-            $table->integer('point');
-            $table->rememberToken();
             $table->timestamps();
         });
     }
