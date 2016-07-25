@@ -49,7 +49,7 @@ function voteC(type,id,vote,_this) {
             res = JSON.parse(res);
             $(_this).parent().siblings('.content-body').find('.point').text(res.point);
             if(vote == 'upvote'){
-                $(_this).bind('click', dropupvoteEventC);
+                $(_this).bind('click', dropUpvoteEventC);
                 $(_this).siblings().bind('click', downvoteEventC);
             }else{
                 $(_this).bind('click', dropDownvoteEventC);
