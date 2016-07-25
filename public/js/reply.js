@@ -14,7 +14,7 @@ function openReply() {
     var reply = '<form class="navbar-form navbar-left replyForm" action="/addReply" method="post">'
         +'<div class="form-group">' 
         +'<input type="hidden"  name="comment_id" value="'+temp+'">'
-        +'<input type="text" name="comment"class="form-control" placeholder="Search">'
+        +'<input required type="text" name="comment"class="form-control" placeholder="Search">'
         +'</div>'
         +'<input type="hidden" name="_token" value='+token+'>'
         +'<input type="hidden"  name="post_id" value="'+id+'">'

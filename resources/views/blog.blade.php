@@ -28,7 +28,7 @@
             <div class="form-group">
                 <label  class="col-sm-2 control-label">Comment</label>
                 <div class="col-sm-8">
-                    <textarea name="comment" class="form-control"   rows="5" placeholder="New Comment"></textarea>
+                    <textarea required name="comment" class="form-control"   rows="5" placeholder="New Comment"></textarea>
                 </div>
             </div>
             {{ csrf_field() }}
