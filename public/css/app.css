@@ -191,7 +191,10 @@ a:hover{
     float: right;
 }
 
-
+.content-body_down-delete a{
+    cursor: pointer;
+    color: #a94442;
+}
 
 
 

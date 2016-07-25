@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Blog;
 use App\Models\Comment;
+use App\Models\User;
 use App\Models\Vote;
 use Illuminate\Http\Request;
 
@@ -45,6 +46,7 @@ class BlogController extends Controller
             $c = Comment::where('comment_id','=',$id[$i]->id)->count();
             if($c > 0){
                 $comments[$i]->reply = Comment::where('comment_id','=',$id[$i]->id)->get();
+                $this->addUsername($comments[$i]->reply);
                 $this->checkReply($comments[$i]->reply);
             }
         }
@@ -52,6 +54,38 @@ class BlogController extends Controller
         $blogs->count = $comments->count();
         return view('blog')->withBlog($blogs)->withComments($comments)->withId($id);
     }
+
+    private function addUsername($c){
+        for ($i=0;$i<$c->count();$i++) {
+            $temp = User::where('id', '=', $c[$i]->user_id)->first();
+            $c[$i]->username = $temp->username;
+        }
+    }
+    public function deleteBlog(Request $request){
+
+        Blog::where('id', '=', $request->input('id'))
+            ->where('username', '=', Auth::user()->username)
+            ->delete();
+    }
+
+    public function deleteComment(Request $request){
+
+        $this->deleteSubcomment($request->input('id'));
+        Comment::where('id', '=', $request->input('id'))
+            ->where('user_id', '=', Auth::user()->id)
+            ->delete();
+    }
+
+    private function deleteSubcomment($id){
+
+        $temp = Comment::where('comment_id', '=', $id )->get();
+        if( count($temp) ){
+            foreach ($temp as $i)
+                $this->deleteSubcomment($i->id);
+        }
+        Comment::where('comment_id', '=', $id )->delete();
+    }
+
     private function checkReply($reply){
         for ($i=0;$i<$reply->count();$i++){
             $point =  Vote::where('source_id','=',$reply[$i]->id)
@@ -68,6 +102,7 @@ class BlogController extends Controller
             $c = Comment::where('comment_id','=',$reply[$i]->id)->count();
             if($c > 0){
                 $reply[$i]->reply = Comment::where('comment_id','=',$reply[$i]->id)->get();
+                $this->addUsername($reply[$i]->reply);
                 $this->checkReply($reply[$i]->reply);
             }
         }

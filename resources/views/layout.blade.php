@@ -3,7 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Hacker News @yield('title')</title>
-    <meta name="csrf-token" content="{{ csrf_token() }}" />
+    @if(Auth::check())
+        <meta name="csrf-token" content="{{ csrf_token() }}" />
+        <meta name="username" content="{{ Auth::user()->username }}" />
+        <meta name="user_id" content="{{ Auth::user()->id }}" />
+    @endif
     <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/app.css">
 </head>
@@ -31,6 +35,8 @@
 <script src="/bower_components/jquery/dist/jquery.min.js"></script>
 <script src="/js/vote.js"></script>
 <script src="/js/reply.js"></script>
+<script src="/js/deletePost.js"></script>
+<script src="/js/deleteComment.js"></script>
 @yield('files')
 </body>
 </html>

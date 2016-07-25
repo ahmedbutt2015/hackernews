@@ -17,7 +17,8 @@
             <div class="content-body_down">
                 <p>	<span class="point">{{ $blog->point }}</span> points by
                     <span class="content-body_down-username">{{ $blog->username }}</span>
-                    {{ Feed::time_elapsed_string($blog->created_at) }} | <span class="content-body_down-comments">{{ $blog->count }} comments</span></p>
+                    {{ Feed::time_elapsed_string($blog->created_at) }} | <span class="content-body_down-comments">{{ $blog->count }}</span> comments
+                </p>
             </div>
         </div>
         </div>

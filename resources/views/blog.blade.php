@@ -33,8 +33,8 @@
                     <p>	<span class="point">{{ $comment->point }}</span> points by
                         <span class="content-body_down-username">{{ $comment->username }}</span>
                             {{ Feed::time_elapsed_string($comment->created_at) }} | <span class="content-body_down-comments">
-                                {{ isset($comment->reply) ? $comment->reply->count() : 0 }} replies
-                            </span>
+                                {{ isset($comment->reply) ? $comment->reply->count() : 0 }}
+                            </span> replies
                     </p>
                 </div>
                 <div class="content-body_up">
@@ -53,4 +53,5 @@
 @endsection
 @section('files')
     <script src="/js/commentVote.js"></script>
+    <script src="/js/temp.js"></script>
 @endsection

@@ -19,6 +19,8 @@ Route::group(['middleware' => 'auth'],function(){
     Route::any('/vote', 'VoteController@vote');
     Route::post('/addComment', 'BlogController@addComment');
     Route::post('/addReply', 'BlogController@addReply');
+    Route::delete('/deleteBlog', 'BlogController@deleteBlog');
+    Route::delete('/deleteComment', 'BlogController@deleteComment');
     Route::get('/blog/{id}', 'BlogController@blog');
 
     Route::get('/logout', function(){
@@ -26,6 +28,7 @@ Route::group(['middleware' => 'auth'],function(){
         return redirect('/');
     });
 });
+
 Route::group(['middleware' => 'guest'],function(){
     Route::any('/register','AuthController@register');
     Route::any('/login','AuthController@login');
