@@ -141,6 +141,8 @@ a:hover{
     height: auto;
     display: block;
     clear: both;
+}
+.comments .commentReply{
     padding-left: 80px;
 }
 .comment .vote,
@@ -177,8 +179,17 @@ a:hover{
     color: #080808;
 }
 
+.form-horizontal .control-label{
+    position: static;
+    padding-left: 20px;
+    width: 100px;
+    text-align: left;
+}
 
-
+.addComment button{
+    margin-right: 80px;
+    float: right;
+}
 
 
 
