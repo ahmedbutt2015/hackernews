@@ -1,37 +1,35 @@
-$('.comment .upvote').on('click',upvoteEvent);
-$('.comment .downvote').on('click',downvoteEvent);
+$('.comment .upvote').on('click',upvoteEventC);
+$('.comment .downvote').on('click',downvoteEventC);
 $('.comment').each(function () {
 
     if($(this).attr('vote') == 'upvote'){
         console.log(' assign event comm');
         $(this).children().children('.upvote').unbind('click');
         $(this).find('.glyphicon-chevron-up').first().css('color' , 'red');
-        $(this).children().children('.upvote').bind('click',dropUpvoteEvent);
+        $(this).children().children('.upvote').bind('click',dropUpvoteEventC);
     }
     else if($(this).attr('vote') == 'downvote'){
         console.log(' assign event comm');
         $(this).find('.glyphicon-chevron-down').first().css('color' , 'red');
         $(this).children().children('.downvote').unbind('click');
-        $(this).children().children('.downvote').bind('click',dropDownvoteEvent);
+        $(this).children().children('.downvote').bind('click',dropDownvoteEventC);
     }
 });
 
-function upvoteEvent() {
+function upvoteEventC() {
     console.log(' assign event comm');
 
     var id = $(this).parents('.comment').attr('data-id');
     $(this).parents('.comment').attr('vote','upvote');
-    vote('comment',id,'upvote',this);
+    voteC('comment',id,'upvote',this);
 }
-function downvoteEvent(){
-    console.log(' assign event comm');
-
+function downvoteEventC(){
     console.log('Downvote');
     var id = $(this).parents('.comment').attr('data-id');
     $(this).parents('.comment').attr('vote','downvote');
-    vote('comment',id,'downvote',this);
+    voteC('comment',id,'downvote',this);
 }
-function vote(type,id,vote,_this) {
+function voteC(type,id,vote,_this) {
     $(_this).unbind('click');
     $(_this).siblings().unbind('click');
     $(_this).siblings().css('color' , '#080808');
@@ -51,16 +49,16 @@ function vote(type,id,vote,_this) {
             res = JSON.parse(res);
             $(_this).parent().siblings('.content-body').find('.point').text(res.point);
             if(vote == 'upvote'){
-                $(_this).bind('click', dropUpvoteEvent);
-                $(_this).siblings().bind('click', downvoteEvent);
+                $(_this).bind('click', dropupvoteEventC);
+                $(_this).siblings().bind('click', downvoteEventC);
             }else{
-                $(_this).bind('click', dropDownvoteEvent);
-                $(_this).siblings().bind('click', upvoteEvent);
+                $(_this).bind('click', dropDownvoteEventC);
+                $(_this).siblings().bind('click', upvoteEventC);
             }
         }
     });
 }
-function dropVote(type,id,_this,vote) {
+function dropVoteC(type,id,_this,vote) {
     $(_this).unbind('click');
     $(_this).siblings().unbind('click');
     $(_this).css('color' , '#080808');
@@ -78,26 +76,26 @@ function dropVote(type,id,_this,vote) {
             res = JSON.parse(res);
             $(_this).parent().siblings('.content-body').find('.point').text(res.point);
             if(vote == 'upvote'){
-                $(_this).bind('click', upvoteEvent);
-                $(_this).siblings().bind('click', downvoteEvent);
+                $(_this).bind('click', upvoteEventC);
+                $(_this).siblings().bind('click', downvoteEventC);
             }else{
-                $(_this).bind('click', downvoteEvent);
-                $(_this).siblings().bind('click', upvoteEvent);
+                $(_this).bind('click', downvoteEventC);
+                $(_this).siblings().bind('click', upvoteEventC);
             }
         }
     });
 }
 
-function dropUpvoteEvent() {
+function dropUpvoteEventC() {
     console.log('Drop upvote');
     $(this).parent().parent().attr('vote','');
     var id = $(this).parents('.comment').attr('data-id');
-    dropVote('comment',id,this,'upvote');
+    dropVoteC('comment',id,this,'upvote');
 }
-function dropDownvoteEvent() {
+function dropDownvoteEventC() {
     console.log('Drop downvote');
     $(this).parent().parent().attr('vote','');
     var id = $(this).parents('.comment').attr('data-id');
-    dropVote('comment',id,this,'downvote');
+    dropVoteC('comment',id,this,'downvote');
 }
 

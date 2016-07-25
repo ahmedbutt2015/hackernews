@@ -49,6 +49,7 @@ class BlogController extends Controller
             }
         }
 //        dd($comments);
+        $blogs->count = $comments->count();
         return view('blog')->withBlog($blogs)->withComments($comments)->withId($id);
     }
     private function checkReply($reply){
