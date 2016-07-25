@@ -5,10 +5,12 @@ $('.comment').each(function () {
     if($(this).attr('vote') == 'upvote'){
         console.log(' assign event comm');
         $(this).children().children('.upvote').unbind('click');
+        $(this).find('.glyphicon-chevron-up').first().css('color' , 'red');
         $(this).children().children('.upvote').bind('click',dropUpvoteEvent);
     }
     else if($(this).attr('vote') == 'downvote'){
         console.log(' assign event comm');
+        $(this).find('.glyphicon-chevron-down').first().css('color' , 'red');
         $(this).children().children('.downvote').unbind('click');
         $(this).children().children('.downvote').bind('click',dropDownvoteEvent);
     }
@@ -32,6 +34,8 @@ function downvoteEvent(){
 function vote(type,id,vote,_this) {
     $(_this).unbind('click');
     $(_this).siblings().unbind('click');
+    $(_this).siblings().css('color' , '#080808');
+    $(_this).css('color' , 'red');
     $.ajax({
         url : '/vote',
         type : 'POST',
@@ -59,6 +63,7 @@ function vote(type,id,vote,_this) {
 function dropVote(type,id,_this,vote) {
     $(_this).unbind('click');
     $(_this).siblings().unbind('click');
+    $(_this).css('color' , '#080808');
     $.ajax({
         url : '/vote',
         type : 'DELETE',

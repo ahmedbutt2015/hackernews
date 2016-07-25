@@ -9,9 +9,10 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
-class AuthController extends Controller
-{
+class AuthController extends Controller{
+
     public function login(Request $request){
+
         if($request->isMethod('POST')){
             $email = $request->input('email');
             $password = $request->input('password');
@@ -41,9 +42,11 @@ class AuthController extends Controller
 
     public function register(Request $req){
         if($req->isMethod('GET')){
+
             return view('register');
         }
         if($req->isMethod('POST')){
+
             $email = $req->input('email');
             $password = bcrypt($req->input('password'));
             $username = $req->input('username');
@@ -61,6 +64,7 @@ class AuthController extends Controller
                     'username' => $username
                 ]);
                 if($user->save()){
+
                     return redirect('/login');
                 }
             }

@@ -15,38 +15,22 @@ class FeedController extends Controller
 {
     public function feedPage(Request $request){
 
-        if($request->isMethod('GET')){
-            $blogs = Blog::orderBy('id','desc')->get();
-            for ($i=0;$i<$blogs->count();$i++){
-                $blogs[$i]->count = Comment::where('post_id','=',$blogs[$i]->id)->count();
-                $blogs[$i]->point = VoteController::getPoints($blogs[$i]->id,'post');
-                $c =  Vote::where('source_id','=',$blogs[$i]->id)
-                        ->where('user_id','=',Auth::user()->id)
-                        ->where('type','=','post')
-                        ->get();
-                if(count($c) >0){
-                    $blogs[$i]->vote = 'downvote';
-                    if($c[0]->upvote == 1){
-                        $blogs[$i]->vote = 'upvote';
-                    }
+        $blogs = Blog::orderBy('id','desc')->get();
+        for ($i=0;$i<$blogs->count();$i++){
+            $blogs[$i]->count = Comment::where('post_id','=',$blogs[$i]->id)->count();
+            $blogs[$i]->point = VoteController::getPoints($blogs[$i]->id,'post');
+            $c =  Vote::where('source_id','=',$blogs[$i]->id)
+                    ->where('user_id','=',Auth::user()->id)
+                    ->where('type','=','post')
+                    ->get();
+            if(count($c) >0){
+                $blogs[$i]->vote = 'downvote';
+                if($c[0]->upvote == 1){
+                    $blogs[$i]->vote = 'upvote';
                 }
             }
-            return view('feed')->withBlogs($blogs);
         }
-        elseif ($request->isMethod('PUT')){
-            $id = $request->input('post_id');
-            $blog = Blog::find($id);
-            if($request->input('method') == 'upvote'){
-//                $blog->point = ++$point;
-            }
-            else{
-//                $blog->point = --$point;
-            }
-            $blog->save();
-        }
-        else{
-            return 'Error Page not Found';
-        }
+        return view('feed')->withBlogs($blogs);
     }
 
 

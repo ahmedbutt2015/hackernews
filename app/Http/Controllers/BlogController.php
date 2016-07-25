@@ -12,8 +12,8 @@ use Illuminate\Support\Facades\Auth;
 
 class BlogController extends Controller
 {
-    public function blog($id)
-    {
+    public function blog($id){
+        
         $blogs = Blog::find($id);
         $blogs->point = VoteController::getPoints($blogs->id,'post');
         $c =  Vote::where('source_id','=',$blogs->id)

@@ -14,7 +14,7 @@
 use Illuminate\Support\Facades\Auth;
 
 Route::group(['middleware' => 'auth'],function(){
-    Route::any('/', 'FeedController@feedPage');
+    Route::get('/', 'FeedController@feedPage');
     Route::any('/submit', 'FeedController@submit');
     Route::any('/vote', 'VoteController@vote');
     Route::post('/addComment', 'BlogController@addComment');

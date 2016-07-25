@@ -172,8 +172,10 @@ a:hover{
     float: left;
     margin-left: 10px;
 }
-
-
+.vote .glyphicon-chevron-up,
+.vote .glyphicon-chevron-down{
+    color: #080808;
+}
 
 
 
