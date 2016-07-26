@@ -21,7 +21,7 @@
                 {{$errors->first('password')}}
             @endif
             {{csrf_field()}}
-            <input class="btn btn-lg btn-primary btn-block" type="submit" value="Sign up">
+            <input class="btn btn-lg btn-danger btn-block" type="submit" value="Sign up">
         </form>
     </div>
 @endsection

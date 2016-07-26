@@ -1,1 +1,1 @@
-$('.content-body_down-delete').remove();
+$('.content .content-body_down-delete').remove();

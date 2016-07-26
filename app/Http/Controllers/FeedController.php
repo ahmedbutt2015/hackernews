@@ -60,6 +60,7 @@ class FeedController extends Controller
             }
         }
     }
+
     static function time_elapsed_string($datetime, $full = false) {
         $now = new DateTime;
         $ago = new DateTime($datetime);
