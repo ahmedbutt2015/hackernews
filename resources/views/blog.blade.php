@@ -5,25 +5,16 @@
     ?>
     @include('view.ShowBlog')
     <div class="addComment">
-        <form class="form-horizontal" action="/addComment" method="POST">
-            <input type="hidden"  name="post_id" value="{{ $blog->id }}">
-            <div class="form-group">
-                <label  class="col-sm-2 control-label">Comment</label>
-                <div class="col-sm-8">
-                    <textarea required name="comment" class="form-control"   rows="5" placeholder="New Comment"></textarea>
-                </div>
+        <div class="form-group">
+            <label  class="col-sm-2 control-label">Comment</label>
+            <div class="col-sm-8">
+                <textarea required name="comment" class="form-control addCommentText"   rows="5" placeholder="New Comment"></textarea>
             </div>
-            {{ csrf_field() }}
-            <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-8">
-                    <button type="submit" class="btn btn-default">Add</button>
-                </div>
-            </div>
-        </form>
+        </div>
     </div>
     <div class="comments">
         @foreach($comments as $i => $comment)
-        <div class="comment" data-id="{{ $id[$i]->id }}" vote="{{ isset($comment->vote) ? $comment->vote : '' }}">
+        <div class="comment" data-id="{{ $comment->id }}" vote="{{ $comment->vote or '' }}">
             <div class="vote">
                 <div class="upvote glyphicon glyphicon-chevron-up"></div>
                 <div class="downvote glyphicon glyphicon-chevron-down"></div>
@@ -54,4 +45,5 @@
 @section('files')
     <script src="/js/commentVote.js"></script>
     <script src="/js/temp.js"></script>
+    <script src="/js/addComment.js"></script>
 @endsection

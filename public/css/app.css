@@ -179,7 +179,7 @@ a:hover{
     color: #080808;
 }
 
-.form-horizontal .control-label{
+.form-group .control-label{
     position: static;
     padding-left: 20px;
     width: 100px;
@@ -195,7 +195,10 @@ a:hover{
     cursor: pointer;
     color: #a94442;
 }
+ .wrapper .addComment{
 
+     height : 140px;
+ }
 
 
 

@@ -27,32 +27,16 @@ class BlogController extends Controller
                 $blogs->vote = 'upvote';
             }
         }
-        $comments = Comment::where('post_id','=',$blogs->id)
-                        ->join('users', 'comments.user_id', '=', 'users.id')
-                        ->orderby('comments.id','desc')->get();
-        $id = Comment::orderby('id','desc')->where('post_id','=',$blogs->id)->get();
-        for ($i=0;$i<$id->count();$i++){
-            $point =  Vote::where('source_id','=',$id[$i]->id)
-                ->where('user_id','=',Auth::user()->id)
-                ->where('type','=','comment')
-                ->get();
-            if(count($point) >0){
-                $comments[$i]->vote = 'downvote';
-                if($point[0]->upvote == 1){
-                    $comments[$i]->vote = 'upvote';
-                }
-            }
-            $comments[$i]->point = VoteController::getPoints($id[$i]->id,'comment');
-            $c = Comment::where('comment_id','=',$id[$i]->id)->count();
-            if($c > 0){
-                $comments[$i]->reply = Comment::where('comment_id','=',$id[$i]->id)->get();
-                $this->addUsername($comments[$i]->reply);
-                $this->checkReply($comments[$i]->reply);
-            }
+        $comments = Comment::where('post_id','=',$blogs->id)->orderby('id','desc')->get();
+        for ($i=0;$i<$comments->count();$i++){
+            $temp = User::where('id','=',$comments[$i]->user_id)->get()->pluck('username');
+            $comments[$i]->username = $temp[0];
         }
-//        dd($comments);
+        $this->checkReply($comments);
+
         $blogs->count = $comments->count();
-        return view('blog')->withBlog($blogs)->withComments($comments)->withId($id);
+//        dd($comments);
+        return view('blog')->withBlog($blogs)->withComments($comments);
     }
 
     private function addUsername($c){
@@ -110,17 +94,13 @@ class BlogController extends Controller
     }
     public function addComment(Request $request){
 
-        if($request->isMethod('POST')){
-            $comment = new Comment();
-            $comment->post_id = $request->input('post_id');
-            $comment->user_id = Auth::user()->id;
-            $comment->comment = $request->input('comment');
-            if($comment->save()){
-                return redirect('/blog/'.$request->input('post_id'));
-            }else{
-                return redirect('/blog/'.$request->input('post_id'))->withErrors($comment->errors());
-            }
-        }
+        $comment = new Comment();
+        $comment->post_id = $request->input('post_id');
+        $comment->user_id = Auth::user()->id;
+        $comment->comment = $request->input('comment');
+        $comment->save();
+        $id = Comment::orderby('id','desc')->get();
+        echo json_encode(array("id" => $id[0]->id ));
     }
     public function addReply(Request $request){
 
