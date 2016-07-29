@@ -31,7 +31,6 @@ function addReply(e) {
         var comment = $(this).val();
         var username = $('meta[name="username"]').attr('content');
         _this = this;
-        console.log($(_this));
         $.ajax({
             url : '/addReply',
             type : 'POST',
@@ -59,14 +58,21 @@ function addReply(e) {
                     +'<p> '+ comment +'</p><p class="reply">reply</p></div></div>'
                     +'</div> </div>';
                 $(_this).parents('.comment').first().append(temp);
+                temp = $('.commentReply');
+                $(temp).each(function () {
+                   if(res.id == $(this).attr('data-id')){
+                       temp = $(this);
+                   }
+                });
                 var t = $(_this).parents('.comment').first().find('.content-body_down-comments').first();
                 $(t).text(parseInt($(t).text()) + 1);
                 $(_this).parent().siblings('.reply').bind('click',openReply);
                 $(_this).remove();
                 $('.reply').on('click',openReply);
                 $('.content-body_down-delete').on('click',deleteComment);
+                $(temp).find('.upvote').first().on('click',upvoteEventC);
+                $(temp).find('.downvote').first().on('click',downvoteEventC);
             }
         });
-
     }
 }
