@@ -8,7 +8,8 @@ $('.comment').each(function () {
     }
 });
 
-$('.content-body_down-delete').on('click',function () {
+$('.content-body_down-delete').on('click',deleteComment);
+function deleteComment() {
 
     var _this = $(this).parents('.comment').first();
     var id = $(_this).attr('data-id');
@@ -33,4 +34,4 @@ $('.content-body_down-delete').on('click',function () {
             $(_this).slideUp().remove();
         }
     });
-});
+}

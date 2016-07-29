@@ -32,7 +32,11 @@ $('.addCommentText').on('keypress',function (e) {
                 $('.comments').prepend(temp);
                 var t = $('.wrapper').find('.content-body_down-comments').first();
                 $(t).text(parseInt($(t).text()) + 1);
-
+                $('.reply').on('click',openReply);
+                $('.content-body_down-delete').on('click',deleteComment);
+                var t = $('.comment').first();
+                $(t[0]).find('.upvote').first().on('click',upvoteEventC);
+                $(t[0]).find('.downvote').first().on('click',downvoteEventC);
             }
         });
     }
