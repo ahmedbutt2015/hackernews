@@ -32,4 +32,6 @@ Route::group(['middleware' => 'auth'],function(){
 Route::group(['middleware' => 'guest'],function(){
     Route::any('/register','AuthController@register');
     Route::any('/login','AuthController@login');
+    Route::get('/user/verify/{token}', 'AuthController@verifyUser');
 });
+

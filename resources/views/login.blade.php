@@ -4,6 +4,9 @@
 @endsection
 @section('content')
     <div class="form">
+        @if(Session::has('email_status'))
+            {{Session::get('email_status')}}
+        @endif
         <form class="form-signin" method="POST" action="/login">
             <h2 class="form-signin-heading">Please sign in</h2>
             <label for="inputUserName" class="sr-only">Email</label>

@@ -104,16 +104,13 @@ class BlogController extends Controller
     }
     public function addReply(Request $request){
 
-        if($request->isMethod('POST')){
-            $comment = new Comment();
-            $comment->comment_id = $request->input('comment_id');
-            $comment->user_id = Auth::user()->id;
-            $comment->comment = $request->input('comment');
-            if($comment->save()){
-                return redirect('/blog/'.$request->input('post_id'));
-            }else{
-                return redirect('/blog/'.$request->input('post_id'))->withErrors($comment->errors());
-            }
-        }
+        $comment = new Comment();
+        $comment->comment_id = $request->input('comment_id');
+        $comment->user_id = Auth::user()->id;
+        $comment->comment = $request->input('comment');
+        $comment->save();
+        $id = Comment::orderby('id','desc')->get();
+        echo json_encode(array("id" => $id[0]->id ));
+
     }
 }
